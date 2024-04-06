@@ -1,24 +1,33 @@
 import { Col, Row, Input, Typography, Radio, Select, Tag } from "antd";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { searchFilter, searchPriority } from "../../redux/userSlice";
+import {
+  searchFilter,
+  searchPriority,
+  searchStatus,
+} from "../../redux/userSlice";
 
 const { Search } = Input;
 
 export default function Filters() {
-  const [search, setSearch] = useState("");
+  const dispatch = useDispatch();
+  const [search, setSearch] = useState<string>("");
   const handleSearch = (e: any) => {
     setSearch(e.target.value);
     dispatch(searchFilter(e.target.value));
   };
 
   const [priority, setPriority] = useState([]);
+
   const handlePriority = (e: any) => {
     setPriority(e);
     dispatch(searchPriority(e));
   };
 
-  const dispatch = useDispatch();
+  const handleStatus = (e: any) => {
+    dispatch(searchStatus(e.target.value));
+  };
+
   return (
     <Row justify="center">
       <Col span={24}>
@@ -28,7 +37,7 @@ export default function Filters() {
           Search
         </Typography.Paragraph>
         <Search
-          placeholder="input search text"
+          placeholder="Search text"
           value={search}
           onChange={handleSearch}
         />
@@ -39,7 +48,7 @@ export default function Filters() {
         >
           Filter By Status
         </Typography.Paragraph>
-        <Radio.Group>
+        <Radio.Group onChange={handleStatus}>
           <Radio value="All">All</Radio>
           <Radio value="Completed">Completed</Radio>
           <Radio value="Todo">To do</Radio>

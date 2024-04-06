@@ -21,36 +21,50 @@ export default function TodoList() {
 
   const dispatch = useDispatch();
   const handleInputChange = () => {
-    dispatch(
-      addTodo({
-        id: uuidv4(),
-        name: input,
-        priority: priority,
-      })
-    );
-    setInput("");
-    setPriority("Medium");
+    if (input) {
+      dispatch(
+        addTodo({
+          id: uuidv4(),
+          name: input,
+          priority: priority,
+          completed: false,
+        })
+      );
+      setInput("");
+      setPriority("Medium");
+    }
   };
   return (
-    <Row style={{ height: "calc(100% - 40px)" }}>
-      <Col span={24} style={{ height: "calc(100% - 40px)", overflowY: "auto" }}>
+    <Row style={{ height: "350px", width: "100%" }}>
+      <Col
+        span={24}
+        style={{
+          height: "calc(100% - 40px)",
+          overflow: "auto",
+          scrollbarColor: "#6969dd",
+          scrollbarWidth: "thin",
+        }}
+      >
         {todoList11.map((todo) => {
           return (
             <Todo
               key={todo.id}
+              id={todo.id}
               name={todo.name}
               priority={todo.priority}
+              completed={todo.completed}
             ></Todo>
           );
         })}
       </Col>
       <Col span={24}>
         <Input.Group style={{ display: "flex" }} compact>
-          <Input placeholder="abc" value={input} onChange={changeInput} />
+          <Input value={input} onChange={changeInput} />
           <Select
             defaultValue="Medium"
             value={priority}
             onChange={changePriority}
+            style={{ width: "150px" }}
           >
             <Select.Option value="High" label="High">
               <Tag color="red">High</Tag>
