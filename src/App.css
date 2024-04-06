@@ -4,3 +4,15 @@ body {
   justify-content: center;
   align-items: center;
 }
+
+.container {
+  width: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: white;
+  padding: 20px;
+  box-shadow: 0 0 10px 4px #bfbfbf;
+  border-radius: 5;
+}
